@@ -91,7 +91,7 @@ docker compose up --build
 ## 🛠 To Do (Coming Soon)
 
 - [ ] JWT Auth + Protected Routes
-- [ ] Chat Rooms & Messages
+- [✅ ] Chat Rooms & Messages
 - [ ] Socket.IO for Real-Time Messaging
 - [ ] Deployment to Render/Vercel
 
