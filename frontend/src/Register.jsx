@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from './UserContext';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [image, setImage] = useState('');
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleRegister = async () => {
     const res = await fetch('http://localhost:9000/register', {
@@ -11,16 +15,22 @@ function Register() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password, image })
     });
-    const data = await res.json();
-    alert("Account created: " + JSON.stringify(data, null, 2));
+
+    if (res.ok) {
+      const data = await res.json();
+      login(data);
+      navigate('/');
+    } else {
+      alert("Registration failed!");
+    }
   };
 
   return (
     <div>
-      <h2>Create Account</h2>
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} /><br /><br />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} /><br /><br />
-      <input placeholder="Image URL" onChange={(e) => setImage(e.target.value)} /><br /><br />
+      <h2>Register</h2>
+      <input placeholder="Email" onChange={e => setEmail(e.target.value)} /><br /><br />
+      <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} /><br /><br />
+      <input placeholder="Image URL" onChange={e => setImage(e.target.value)} /><br /><br />
       <button onClick={handleRegister}>Register</button>
     </div>
   );
