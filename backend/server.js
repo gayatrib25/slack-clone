@@ -8,7 +8,8 @@ const PORT = 9000;
 mongoose.connect("mongodb://mongo:27017/slack_db", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+}).then(() => console.log("✅ Connected to MongoDB"))
+  .catch(err => console.error("❌ MongoDB connection error:", err));
 
 app.use(cors());
 app.use(express.json());
